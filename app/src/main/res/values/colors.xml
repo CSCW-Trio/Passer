@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!-- titleBar按下颜色 -->
+    <color name="color_titlebar_left_selector">#53ececec</color>
+
     <color name="color_btn">#8bc34a</color>
 
     <color name="color_background">#f1f8e9</color>
