@@ -81,6 +81,7 @@ public class PasserActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
@@ -91,7 +92,7 @@ public class PasserActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+    // 阿卡接口设计
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
