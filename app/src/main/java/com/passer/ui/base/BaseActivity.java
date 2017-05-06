@@ -51,7 +51,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    public abstract int getLayoutId();
+    public abstract int
+    getLayoutId();
 
     public abstract void initViews();
 

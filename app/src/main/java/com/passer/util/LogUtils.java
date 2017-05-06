@@ -16,7 +16,6 @@ package com.passer.util;/*
  */
 
 import android.util.Log;
-
 /**
  * Log utilities that can control whether print the log.
  */
