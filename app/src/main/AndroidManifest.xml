@@ -25,7 +25,7 @@
             android:value="7bcac19ed061fc86aa0329056dc9fd80" />
 
         <!--主启动界面-->
-        <activity android:name=".ui.young.LoginActivity">
+        <activity android:name=".PasserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,8 +34,8 @@
         </activity>
 
         <activity android:name=".ui.young.AccessActivity"/>
-        <activity android:name=".PasserActivity" />
         <activity android:name=".ui.biao.RoutePickActivity" />
+        <activity android:name=".ui.young.LoginActivity" />
         <activity android:name=".ui.biao.RoutePickDetailActivity" />
 
     </application>

@@ -2,19 +2,22 @@ package com.passer.ui.biao;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdate;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapFragment;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.NaviPara;
 import com.amap.api.maps.model.PolylineOptions;
 import com.passer.R;
 import com.passer.bean.SpotBean;
@@ -24,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyMapFragment extends MapFragment
-        implements Serializable {
+        implements Serializable, AMap.InfoWindowAdapter {
     private AMap mAMap;
     private ArrayList<SpotBean> mSpotBeans = new ArrayList<>();
 
@@ -59,15 +62,16 @@ public class MyMapFragment extends MapFragment
                 return true;
             }
         });
+        mAMap.setInfoWindowAdapter(this);// 添加显示infowindow监听事件
     }
 
     public void setupAMapUI(boolean flag) {
         if (!flag) return;
         UiSettings mUiSettings = mAMap.getUiSettings();
-        mUiSettings.setZoomControlsEnabled(false);
         mUiSettings.setCompassEnabled(false);
         mUiSettings.setMyLocationButtonEnabled(true); //显示默认的定位按钮
         mUiSettings.setScaleControlsEnabled(false);//控制比例尺控件是否显示
+        mUiSettings.setZoomControlsEnabled(false);
     }
 
     private MyLocationStyle getLocationStyle() {
@@ -86,7 +90,9 @@ public class MyMapFragment extends MapFragment
             latLngs.add(SpotBeans.get(i).getLatLng());
         }
         aMap.addPolyline(new PolylineOptions()
-                .addAll(latLngs).width(10).color(Color.argb(255, 1, 1, 1)));
+                .addAll(latLngs).width(10)
+                .setDottedLine(true)//设置虚线
+                .color(Color.GREEN));
     }
 
     private void drawMarkers(List<SpotBean> SpotBeans, AMap aMap) {
@@ -104,20 +110,83 @@ public class MyMapFragment extends MapFragment
     }
 
     private void adjustCamera(List<SpotBean> SpotBeans, AMap aMap) {
-        if (SpotBeans.size() >= 2) {
-            LatLngBounds latlngBounds = new LatLngBounds(SpotBeans.get(0).getLatLng(), SpotBeans.get(1).getLatLng());
-            for (int i = 2; i < SpotBeans.size(); i++) {
-                latlngBounds = latlngBounds.including(SpotBeans.get(i).getLatLng());
-            }
-            aMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latlngBounds, 10));
+        zoomToSpan();
+    }
 
-        } else if (SpotBeans.size() == 1) {
-            CameraUpdate cameraUpdate =
-                    CameraUpdateFactory.newCameraPosition(new CameraPosition(
-                            SpotBeans.get(0).getLatLng(), 18, 30, 30));
-            aMap.animateCamera(cameraUpdate);
-        } else {
-            aMap.reloadMap();
+    private void zoomToSpan() {
+        //移动镜头到当前的视角。
+        try {
+            if (mSpotBeans != null && mSpotBeans.size() > 0) {
+                if (mAMap == null)
+                    return;
+                if (mSpotBeans.size() == 1) {
+                    mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mSpotBeans.get(0).getLatitude(),
+                            mSpotBeans.get(0).getLongitude()), 18f));
+                } else {
+                    LatLngBounds bounds = getLatLngBounds();
+                    mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 5));
+                }
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
+
+    private LatLngBounds getLatLngBounds() {
+        LatLngBounds.Builder b = LatLngBounds.builder();
+        for (int i = 0; i < mSpotBeans.size(); i++) {
+            b.include(new LatLng(mSpotBeans.get(i).getLatitude(),
+                    mSpotBeans.get(i).getLongitude()));
+        }
+        return b.build();
+    }
+
+    // 调起高德地图导航功能，如果没安装高德地图，会进入异常，可以在异常中处理，调起高德地图app的下载页面
+    public void startAMapNavi(Marker marker) {
+        // 构造导航参数
+        NaviPara naviPara = new NaviPara();
+        // 设置终点位置
+        naviPara.setTargetPoint(marker.getPosition());
+        // 设置导航策略，这里是避免拥堵
+        naviPara.setNaviStyle(NaviPara.DRIVING_AVOID_CONGESTION);
+
+        // 调起高德地图导航
+        try {
+            AMapUtils.openAMapNavi(naviPara, getActivity().getApplicationContext());
+        } catch (com.amap.api.maps.AMapException e) {
+
+            // 如果没安装会进入异常，调起下载页面
+            AMapUtils.getLatestAMapApp(getActivity().getApplicationContext());
+
+        }
+
+    }
+
+    @Override
+    public View getInfoWindow(Marker marker) {
+        return null;
+    }
+
+    @Override
+    public View getInfoContents(final Marker marker) {
+        View view = getActivity().getLayoutInflater().inflate(R.layout.item_info_window,
+                null);
+        TextView title = (TextView) view.findViewById(R.id.title);
+        title.setText(marker.getTitle());
+
+        TextView snippet = (TextView) view.findViewById(R.id.snippet);
+        snippet.setText(marker.getSnippet());
+        ImageButton button = (ImageButton) view
+                .findViewById(R.id.start_amap_app);
+        // 调起高德地图app
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAMapNavi(marker);
+            }
+        });
+        return view;
+    }
+
+
 }
