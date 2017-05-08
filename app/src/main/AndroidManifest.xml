@@ -30,15 +30,20 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".ui.young.LoginActivity">
 
-        </activity>
-        <activity android:name=".ui.young.AccessActivity">
+
+        <!--主启动界面-->
+        <activity android:name=".ui.young.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+
+        <activity android:name=".ui.young.AccessActivity">
+
         </activity>
         <activity android:name=".ui.biao.RoutePickActivity">
 

@@ -37,7 +37,12 @@ public class LoginPre implements ILoginPre {
 
     @Override
     public void setProgressBarVisibility(int visibility) {
+        mILoginView.onSetProgressBarVisibility(visibility);
+    }
 
+    @Override
+    public void doStatActivity() {
+        mILoginView.OnStartActivity();
     }
 
 

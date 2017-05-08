@@ -108,6 +108,7 @@ public class AccessAdapter extends RecyclerView.Adapter {
                 spotBean = new SpotBean("高高新天地",23.010280,113.3920240,"高高新天地");
                 list_spotbean.add(spotBean);
                 StaticValue.setList_spotBean(list_spotbean);
+
                 //跳转
                 Toast.makeText(mContext,"跳转",Toast.LENGTH_SHORT).show();
                 Intent intent =new Intent(mContext, RoutePickActivity.class);
