@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -33,6 +31,7 @@ import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.passer.R;
+import com.passer.bean.SpotBean;
 import com.passer.util.DialogUtil;
 
 import java.util.ArrayList;
@@ -97,7 +96,7 @@ public class RoutePickDetailActivity extends AppCompatActivity
                 double latitude = mSelectedMarker.getPosition().latitude;
                 double longitude = mSelectedMarker.getPosition().longitude;
                 String snippet = mSelectedMarker.getSnippet();
-                Spot spot = new Spot(title, latitude, longitude, snippet);
+                SpotBean spot = new SpotBean(title, latitude, longitude, snippet);
                 Intent data = new Intent();
                 data.putExtra(RoutePickActivity.EXTRA_SPOT, spot);
                 setResult(RESULT_OK, data);

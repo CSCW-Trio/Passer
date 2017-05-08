@@ -10,11 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.passer.R;
+import com.passer.bean.SpotBean;
 
 import java.util.ArrayList;
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
-    private ArrayList<Spot> mSpots = new ArrayList<>();
+    private ArrayList<SpotBean> mSpots = new ArrayList<>();
     private Context mContext;
     private OnImageButtonClickListener onImageButtonClickListener;
 
@@ -23,9 +24,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     }
 
     MyAdapter(Context context) {
-        Spot spot0 = new Spot("按此输入起点", -1, -1, "");
-        Spot spot1 = new Spot("按此添加路径点", -1, -1, "");
-        Spot spot2 = new Spot("按此添加目的地", -1, -1, "");
+        SpotBean spot0 = new SpotBean("按此输入起点", -1, -1, "");
+        SpotBean spot1 = new SpotBean("按此添加路径点", -1, -1, "");
+        SpotBean spot2 = new SpotBean("按此添加目的地", -1, -1, "");
         mSpots.add(spot0);
         mSpots.add(spot1);
         mSpots.add(spot2);
@@ -36,17 +37,17 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         this.onImageButtonClickListener = onImageButtonClickListener;
     }
 
-    void addSpot(Spot spot) {
+    void addSpot(SpotBean spot) {
         mSpots.add(mSpots.size() - 2, spot);
         notifyItemInserted(mSpots.size() - 2);
         notifyItemRangeChanged(mSpots.size() - 3, 3);
     }
 
-    void addSpot(int position, Spot spot) {
+    void addSpot(int position, SpotBean spot) {
         mSpots.add(position, spot);
     }
 
-    Spot removeSpot(int position) {
+    SpotBean removeSpot(int position) {
         return mSpots.remove(position);
     }
 
@@ -71,7 +72,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     class MyHolder extends RecyclerView.ViewHolder {
         private TextView mTextView;
         private ImageButton mImageButton;
-        private Spot mSpot;
+        private SpotBean mSpot;
 
         MyHolder(View itemView) {
             super(itemView);
@@ -93,7 +94,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             });
         }
 
-        void bindHolder(final Spot spot) {
+        void bindHolder(final SpotBean spot) {
             mTextView.setText(spot.getName());
         }
     }

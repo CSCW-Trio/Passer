@@ -10,13 +10,13 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
-import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.PolylineOptions;
 import com.passer.R;
+import com.passer.bean.SpotBean;
 
 import java.util.ArrayList;
 
@@ -62,7 +62,7 @@ public class RoutePickActivity extends AppCompatActivity implements MyAdapter.On
                                   RecyclerView.ViewHolder target) {
                 int fromPosition = viewHolder.getAdapterPosition();//得到拖动ViewHolder的position
                 int toPosition = target.getAdapterPosition();//得到目标ViewHolder的position
-                Spot removeSpot = mMyAdapter.removeSpot(fromPosition);
+                SpotBean removeSpot = mMyAdapter.removeSpot(fromPosition);
                 mMyAdapter.addSpot(toPosition, removeSpot);
                 mMyAdapter.notifyItemMoved(fromPosition, toPosition);
                 return true;
@@ -127,7 +127,7 @@ public class RoutePickActivity extends AppCompatActivity implements MyAdapter.On
         if (resultCode != RESULT_OK) {
             return;
         }
-        Spot spot = (Spot) data.getSerializableExtra(EXTRA_SPOT);
+        SpotBean spot = (SpotBean) data.getSerializableExtra(EXTRA_SPOT);
         if (requestCode == REQUEST_SPOT_MESSAGE) {
             mMyAdapter.addSpot(spot);
         } else if (requestCode == REQUEST_SPOT_MESSAGE_START) {

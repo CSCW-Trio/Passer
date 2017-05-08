@@ -1,8 +1,8 @@
-package com.passer.ui.biao;
+package com.passer.bean;
 
 import java.io.Serializable;
 
-public class Spot implements Serializable {
+public class SpotBean implements Serializable {
     private String mName;
     private String mSnippet;
     private double mLatitude;
@@ -10,7 +10,7 @@ public class Spot implements Serializable {
 
     public boolean isStart = false, isDestination = false;
 
-    public Spot(String name, double latitude, double longitude, String snippet) {
+    public SpotBean(String name, double latitude, double longitude, String snippet) {
         this.mName = name;
         this.mSnippet = snippet;
         this.mLatitude = latitude;

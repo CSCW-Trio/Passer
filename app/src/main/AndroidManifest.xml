@@ -30,17 +30,23 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".ui.biao.RoutePickActivity">
+        <activity android:name=".ui.young.LoginActivity">
+
+        </activity>
+        <activity android:name=".ui.young.AccessActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.biao.RoutePickActivity">
+
+        </activity>
         <activity
             android:name=".ui.biao.RoutePickDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ui.young.LoginActivity" />
+
     </application>
 
 </manifest>

@@ -10,10 +10,12 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 
+import com.passer.bean.SpotBean;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.Context.TELEPHONY_SERVICE;
@@ -26,18 +28,18 @@ import static android.content.Context.TELEPHONY_SERVICE;
 public class StaticValue {
     //sharedpreference 文件夹的名字
     public static final String SHAREDPREFERENCE_NAME = "conference";
-    //保存在shared..里面的工号key值，以及machineid的key
-    public static final String SP_WORKER_NO = "worker_no";
-    public static final String SP_MACHINE_ID = "machine_id";
-
-    //用来调用后台进行获取身份证图片的key
-    public static final String APP_KEY = "bECibCez6_7milQQ_-jhgKmfHkd8WszQ";
-    public static final String APP_SECRET = "ZIDwFYPoaf9eR2zXbONPmT0B1HyM1m1o";
 
 
 
+    private static List<SpotBean> list_spotBean;//存储路线中各点的数据，让地图界面获取使用
 
-    public static StringBuffer UUID_Builder = new StringBuffer();//用来构造UUID
+    public static List<SpotBean> getList_spotBean() {
+        return list_spotBean;
+    }
+
+    public static void setList_spotBean(List<SpotBean> list_spotBean) {
+        StaticValue.list_spotBean = list_spotBean;
+    }
 
     /**
      * ZC写的。哪个界面需要就由谁来获取
