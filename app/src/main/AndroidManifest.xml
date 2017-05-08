@@ -19,18 +19,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="7bcac19ed061fc86aa0329056dc9fd80" />
-
-        <activity
-            android:name=".PasserActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-
 
         <!--主启动界面-->
         <activity android:name=".ui.young.LoginActivity">
@@ -41,16 +33,10 @@
             </intent-filter>
         </activity>
 
-
-        <activity android:name=".ui.young.AccessActivity">
-
-        </activity>
-        <activity android:name=".ui.biao.RoutePickActivity">
-
-        </activity>
-        <activity
-            android:name=".ui.biao.RoutePickDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.young.AccessActivity"/>
+        <activity android:name=".PasserActivity" />
+        <activity android:name=".ui.biao.RoutePickActivity" />
+        <activity android:name=".ui.biao.RoutePickDetailActivity" />
 
     </application>
 

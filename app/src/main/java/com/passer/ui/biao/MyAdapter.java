@@ -13,9 +13,10 @@ import com.passer.R;
 import com.passer.bean.SpotBean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
-    private ArrayList<SpotBean> mSpots = new ArrayList<>();
+    private ArrayList<SpotBean> mSpotBeans = new ArrayList<>();
     private Context mContext;
     private OnImageButtonClickListener onImageButtonClickListener;
 
@@ -24,12 +25,12 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     }
 
     MyAdapter(Context context) {
-        SpotBean spot0 = new SpotBean("按此输入起点", -1, -1, "");
-        SpotBean spot1 = new SpotBean("按此添加路径点", -1, -1, "");
-        SpotBean spot2 = new SpotBean("按此添加目的地", -1, -1, "");
-        mSpots.add(spot0);
-        mSpots.add(spot1);
-        mSpots.add(spot2);
+        SpotBean SpotBeanStart = new SpotBean("按此输入起点", -1, -1, "");
+        SpotBean SpotBeanAdd = new SpotBean("按此添加路径点", -1, -1, "");
+        SpotBean SpotBeanEnd = new SpotBean("按此添加目的地", -1, -1, "");
+        mSpotBeans.add(SpotBeanStart);
+        mSpotBeans.add(SpotBeanAdd);
+        mSpotBeans.add(SpotBeanEnd);
         mContext = context;
     }
 
@@ -37,18 +38,39 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
         this.onImageButtonClickListener = onImageButtonClickListener;
     }
 
-    void addSpot(SpotBean spot) {
-        mSpots.add(mSpots.size() - 2, spot);
-        notifyItemInserted(mSpots.size() - 2);
-        notifyItemRangeChanged(mSpots.size() - 3, 3);
+    ArrayList<SpotBean> getSpotBeans() {
+        ArrayList<SpotBean> SpotBeans = new ArrayList<>();
+        for (int i = 0; i < mSpotBeans.size(); i++) {
+            String temp = mSpotBeans.get(i).getName();
+            if (!temp.equals("按此输入起点") &&
+                    !temp.equals("按此添加路径点") &&
+                    !temp.equals("按此添加目的地")) {
+                SpotBeans.add(mSpotBeans.get(i));
+            }
+        }
+        return SpotBeans;
     }
 
-    void addSpot(int position, SpotBean spot) {
-        mSpots.add(position, spot);
+    void addSpotBean(SpotBean SpotBean) {
+        mSpotBeans.add(mSpotBeans.size() - 2, SpotBean);
+        notifyItemInserted(mSpotBeans.size() - 2);
+        notifyItemRangeChanged(mSpotBeans.size() - 3, 3);
     }
 
-    SpotBean removeSpot(int position) {
-        return mSpots.remove(position);
+    void addAllSpotBeans(List<SpotBean> SpotBeans) {
+        mSpotBeans.addAll(SpotBeans);
+    }
+
+    void clearAllSpotBeans() {
+        mSpotBeans.clear();
+    }
+
+    void addSpotBean(int position, SpotBean SpotBean) {
+        mSpotBeans.add(position, SpotBean);
+    }
+
+    SpotBean removeSpotBean(int position) {
+        return mSpotBeans.remove(position);
     }
 
     @Override
@@ -60,19 +82,19 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        holder.bindHolder(mSpots.get(position));
+        holder.bindHolder(mSpotBeans.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mSpots.size();
+        return mSpotBeans.size();
     }
 
 
     class MyHolder extends RecyclerView.ViewHolder {
         private TextView mTextView;
         private ImageButton mImageButton;
-        private SpotBean mSpot;
+        private SpotBean mSpotBean;
 
         MyHolder(View itemView) {
             super(itemView);
@@ -94,8 +116,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             });
         }
 
-        void bindHolder(final SpotBean spot) {
-            mTextView.setText(spot.getName());
+        void bindHolder(final SpotBean SpotBean) {
+            mTextView.setText(SpotBean.getName());
         }
     }
 }

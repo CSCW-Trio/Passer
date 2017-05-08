@@ -15,6 +15,7 @@ import com.passer.bean.SpotBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -31,13 +32,13 @@ public class StaticValue {
 
 
 
-    private static List<SpotBean> list_spotBean;//存储路线中各点的数据，让地图界面获取使用
+    private static ArrayList<SpotBean> list_spotBean;//存储路线中各点的数据，让地图界面获取使用
 
-    public static List<SpotBean> getList_spotBean() {
+    public static ArrayList<SpotBean> getList_spotBean() {
         return list_spotBean;
     }
 
-    public static void setList_spotBean(List<SpotBean> list_spotBean) {
+    public static void setList_spotBean(ArrayList<SpotBean> list_spotBean) {
         StaticValue.list_spotBean = list_spotBean;
     }
 

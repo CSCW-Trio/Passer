@@ -4,11 +4,18 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-
-    <com.amap.api.maps.MapView
-        android:id="@+id/map"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        >
+        <fragment
+            android:id="@+id/map"
+            class="com.passer.ui.biao.MyMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
 
     <Button
         android:id="@+id/sure_destination_button"

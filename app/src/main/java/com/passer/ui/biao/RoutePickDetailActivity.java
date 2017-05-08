@@ -21,11 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.MapView;
-import com.amap.api.maps.UiSettings;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
@@ -38,7 +34,7 @@ import java.util.ArrayList;
 
 public class RoutePickDetailActivity extends AppCompatActivity
         implements PoiSearch.OnPoiSearchListener, AMap.OnMarkerClickListener {
-    private MapView mMapView;
+    private MyMapFragment mMapFragment;
     private Button mSureButton;
     private AMap mAMap;
     private Marker mSelectedMarker;
@@ -81,12 +77,11 @@ public class RoutePickDetailActivity extends AppCompatActivity
         });
 
 
-        mMapView = (MapView) findViewById(R.id.map);
-        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
-        mMapView.onCreate(savedInstanceState);
+        mMapFragment = (MyMapFragment) getFragmentManager().findFragmentById(R.id.map);
 
-        setupAMap();
-        setupAMapUI();
+
+        mAMap = mMapFragment.getMap();
+        mAMap.setOnMarkerClickListener(this);
 
         mSureButton = (Button) findViewById(R.id.sure_destination_button);
         mSureButton.setOnClickListener(new View.OnClickListener() {
@@ -105,32 +100,6 @@ public class RoutePickDetailActivity extends AppCompatActivity
         });
 
 
-    }
-
-    private void setupAMap() {
-        //初始化地图控制器对象
-        mAMap = mMapView.getMap();
-        // mAMap.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
-        mAMap.setMyLocationStyle(getLocationStyle());
-        mAMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
-        mAMap.setOnMarkerClickListener(this);
-    }
-
-    private MyLocationStyle getLocationStyle() {
-        MyLocationStyle myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW);// 只定位一次
-        //设置定位蓝点的icon图标方法，需要用到BitmapDescriptor类对象作为参数。
-        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
-//        myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
-        return myLocationStyle;
-    }
-
-    private void setupAMapUI() {
-        UiSettings mUiSettings = mAMap.getUiSettings();
-        mUiSettings.setZoomControlsEnabled(false);
-        mUiSettings.setCompassEnabled(false);
-        mUiSettings.setMyLocationButtonEnabled(true); //显示默认的定位按钮
-        mUiSettings.setScaleControlsEnabled(true);//控制比例尺控件是否显示
     }
 
 
@@ -240,34 +209,6 @@ public class RoutePickDetailActivity extends AppCompatActivity
     @Override
     public void onPoiItemSearched(PoiItem poiItem, int i) {
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
-        mMapView.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
-        mMapView.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
-        mMapView.onPause();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
-        mMapView.onSaveInstanceState(outState);
     }
 
     @Override
