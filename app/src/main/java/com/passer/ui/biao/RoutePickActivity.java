@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.passer.PasserActivity;
 import com.passer.R;
@@ -16,7 +18,7 @@ import com.passer.ui.young.AccessActivity;
 import java.util.List;
 
 public class RoutePickActivity extends AppCompatActivity
-        implements MyAdapter.OnImageButtonClickListener {
+        implements MyAdapter.OnImageButtonClickListener, MyAdapter.OnTextViewClickListener {
     private static final int REQUEST_SpotBean_MESSAGE = 5;
     private static final int REQUEST_SpotBean_MESSAGE_START = 0;
     private static final int REQUEST_SpotBean_MESSAGE_DESTINATION = 1;
@@ -42,6 +44,7 @@ public class RoutePickActivity extends AppCompatActivity
         mRecyclerView.addItemDecoration(new MyDivider(this));
         mMyAdapter = new MyAdapter(this);
         mMyAdapter.setOnImageButtonClickListener(this);
+        mMyAdapter.setOnTextViewClickListener(this);
         mRecyclerView.setAdapter(mMyAdapter);
         mMyAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -155,9 +158,15 @@ public class RoutePickActivity extends AppCompatActivity
         startActivityForResult(intent, requestCode);
     }
 
+    @Override
+    public void onTextViewClick(View v, int position) {
+        Toast.makeText(this, ((TextView) v).getText(), Toast.LENGTH_SHORT).show();
+    }
+
     public void askSuggestRoute(View view) {
         Intent intent = new Intent(this, AccessActivity.class);
         startActivityForResult(intent, REQUEST_SUGGESTION);
+
     }
 
     public void sureWithRoute(View view) {
@@ -166,4 +175,5 @@ public class RoutePickActivity extends AppCompatActivity
         setResult(RESULT_OK, intent);
         this.finish();
     }
+
 }

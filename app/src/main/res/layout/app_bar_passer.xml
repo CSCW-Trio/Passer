@@ -43,7 +43,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        app:backgroundTint="@null"
+        app:srcCompat="@mipmap/ic_floating_action_button" />
 
 
 </RelativeLayout>

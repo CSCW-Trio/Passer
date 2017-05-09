@@ -101,13 +101,13 @@ public class AccessAdapter extends RecyclerView.Adapter {
             public void onClick(View v) {
                 SpotBean spotBean;
                 ArrayList<SpotBean> list_spotbean = new ArrayList<SpotBean>();
-                spotBean = new SpotBean("广东工业大学", 23.0333740, 113.3972800, "广东工业大学");
+                spotBean = new SpotBean("广东工业大学", 23.0333740, 113.3972800, "广州市番禺区外环西路");
                 list_spotbean.add(spotBean);
-                spotBean = new SpotBean("小洲村早茶店", 23.0591000, 113.3583280, "小洲村早茶店");
+                spotBean = new SpotBean("小洲村早茶店", 23.0591000, 113.3583280, "海珠区小洲东路100号");
                 list_spotbean.add(spotBean);
-                spotBean = new SpotBean("雨萌山房", 23.0118340, 113.3955580, "雨萌山房");
+                spotBean = new SpotBean("余萌山房", 23.0118340, 113.3955580, "广州市番禺区大学城北一路");
                 list_spotbean.add(spotBean);
-                spotBean = new SpotBean("高高新天地", 23.010280, 113.3920240, "高高新天地");
+                spotBean = new SpotBean("GOGO新天地", 23.010280, 113.3920240, "广州市番禺区南约大街");
                 list_spotbean.add(spotBean);
                 StaticValue.setList_spotBean(list_spotbean);
 

@@ -8,9 +8,6 @@ import com.passer.R;
 import com.passer.adapter.AccessAdapter;
 import com.passer.ui.base.BaseActivity;
 
-/**
- * Created by 47420 on 2017/4/5.
- */
 
 public class AccessActivity extends BaseActivity {
     @Override

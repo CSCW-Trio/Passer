@@ -92,7 +92,7 @@ public class MyMapFragment extends MapFragment
         aMap.addPolyline(new PolylineOptions()
                 .addAll(latLngs).width(10)
                 .setDottedLine(true)//设置虚线
-                .color(Color.GREEN));
+                .color(Color.RED));
     }
 
     private void drawMarkers(List<SpotBean> SpotBeans, AMap aMap) {
@@ -103,7 +103,7 @@ public class MyMapFragment extends MapFragment
             markerOption.title(spotBean.getName())
                     .position(spotBean.getLatLng())
                     .snippet(spotBean.getSnippet())
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
                     .draggable(true);
             aMap.addMarker(markerOption);
         }

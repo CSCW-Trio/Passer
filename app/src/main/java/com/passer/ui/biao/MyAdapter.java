@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.passer.R;
 import com.passer.bean.SpotBean;
@@ -19,9 +18,18 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
     private ArrayList<SpotBean> mSpotBeans = new ArrayList<>();
     private Context mContext;
     private OnImageButtonClickListener onImageButtonClickListener;
+    private OnTextViewClickListener onTextViewClickListener;
 
     interface OnImageButtonClickListener {
         void onImageButtonClick(int position);
+    }
+
+    void setOnTextViewClickListener(OnTextViewClickListener onTextViewClickListener) {
+        this.onTextViewClickListener = onTextViewClickListener;
+    }
+
+    interface OnTextViewClickListener {
+        void onTextViewClick(View v, int position);
     }
 
     MyAdapter(Context context) {
@@ -111,7 +119,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
             mTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, mTextView.getText(), Toast.LENGTH_SHORT).show();
+                    if (onTextViewClickListener != null) {
+                        onTextViewClickListener.onTextViewClick(v,getAdapterPosition());
+                    }
                 }
             });
         }
